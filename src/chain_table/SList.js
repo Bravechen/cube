@@ -1,0 +1,141 @@
+/**
+ * 单链表
+ * Singly Linked List
+ */
+class SList {
+  constructor() {
+    this.head = null;
+    this.trail = null;
+    this.length = 0;
+  }
+  /**
+   * 在尾部添加
+   */
+  append(value) {
+    let node = new Node(value);
+    this.head = this.head || node;
+    if (this.trail) {
+      this.trail.next = node;
+      this.trail = node;
+    } else {
+      this.trail = node;
+    }
+    this.length++;
+    return node.value;
+  }
+
+  instertAt(position = -1, value) {
+    if (position < 0 || position >= this.length) {
+      return;
+    }
+    let node = new Node(value);
+
+    if (position === 0) {
+      node.next = this.head;
+      this.head = node.next;
+      this.length++;
+      return;
+    }
+    let prev = this.head;
+    let index = 1;
+    while (index < this.length) {
+      if (!prev) {
+        return;
+      }
+      if (index === position) {
+        let next = prev.next;
+        prev.next = node;
+        node.next = next;
+        this.length++;
+        return;
+      }
+      prev = prev.next;
+      index++;
+    }
+  }
+
+  removeAt(position = -1) {
+    if (position < 0 || position >= this.length || !this.head) {
+      return;
+    }
+    if (position === 0) {
+      let next = this.head.next;
+      if (this.head === this.trail) {
+        this.trail = null;
+        this.length = 1;
+      }
+      this.head = next;
+      this.length--;
+      return;
+    }
+    let index = 1;
+    let prev = this.head;
+    while (index >= 0) {
+      if (index === position) {
+        let node = prev.next;
+        prev.next = node.next;
+        if (node === this.trail) {
+          this.trail = prev;
+        }
+        node.next = null;
+        this.length--;
+        return node.value;
+      }
+      prev = prev.next;
+      index++;
+    }
+  }
+
+  indexOf(value) {
+    let index = -1;
+    let node = this.head;
+    while (node) {
+      index++;
+      if (node.value === value) {
+        return index;
+      }
+      node = node.next;
+    }
+    return -1;
+  }
+
+  findNode(value) {
+    let node = this.head;
+    while(node) {
+      if (node.value === value) {
+        return node;
+      }
+    }
+    return null;
+  }
+
+  remove(value) {
+    let index = this.indexOf(value);
+    if (index < 0) {
+      return;
+    }
+    return this.removeAt(index);
+  }
+
+  traversal() {
+    let ary = [];
+    let node = this.head;
+    while (node) {
+      ary.push(node.value);
+      node = node.next;
+    }
+    return ary;
+  }
+}
+
+/**
+ * 数据节点
+ */
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+module.exports = SList;
