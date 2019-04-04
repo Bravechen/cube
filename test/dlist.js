@@ -77,5 +77,53 @@ describe('Double Linked List', function() {
     it('insert a value 11 at index that bigger then dlist.length, will back false', function() {
       expect(dlist.insertAt(12, 11)).to.equal(false);
     });
+
+    describe('after insert a element 100 at index 0, then can get the value at index 0', function() {
+      let dlist3 = createDList();
+      dlist3.insertAt(0, 100);
+      it('head node property value equal 100', function() {
+        expect(dlist3.head)
+         .have.property('value')
+         .equal(100);
+      });
+      it('head property next is a node has property value equal 1', function() {
+        expect(dlist3.head.next)
+          .to.be.a('object')
+          .have.property('value')
+          .equal(1);
+      });
+
+    });
+  });
+
+  describe('#DList.removeAt()', function() {
+    let dlist4 = createDList();
+    it('remove element 3 at index 2, will back 3', function() {
+      expect(dlist4.removeAt(2)).to.equal(3);
+    });
+    it('after remove element at index 2, the property length equal 7', function() {
+      expect(dlist4).property('length').equal(7);
+    });
+
+    it('remove element at index 0, will back 1', function() {
+      let dlist5 = createDList();
+      expect(dlist5.removeAt(0)).to.equal(1);
+    });
+
+    describe('after remove element at end of dlist, the dlist\'s trail is exist and value equal 7', function() {
+      let dlist6 = createDList();
+      it('after remove element at lenth-1,will back 8', function() {
+        expect(dlist6.removeAt(dlist6.length - 1)).to.equal(8);
+      });
+
+      it('after remove element, the property trail is not null, but object and property value equal 7', function() {
+        expect(dlist6.trail)
+          .to.be.a('object')
+          .have.property('value')
+          .equal(7);
+      });
+
+
+    });
   });
 });

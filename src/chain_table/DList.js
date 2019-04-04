@@ -69,23 +69,96 @@ class DList {
     if (position < 0 || position >= this.length) {
       return false;
     }
+    let newOne = new Node(value);
+    if (position === 0) {
+      this.head.prev = newOne;
+      newOne.next = this.head;
+      this.head = newOne;
+      this.length++;
+      return true;
+    }
     let index = 0;
     let node = this.head;
     while(node) {
       if (position === index) {
-        let newOne = new Node(value);
         node.prev.next = newOne;
         newOne.prev = node.prev;
         newOne.next = node;
         node.prev = newOne;
         this.length++;
-        return;
+        return true;
       }
       node = node.next;
       index++;
     }
-    return true;
+    return false;
   }
+
+  /**
+   * 在指定的位置删除元素
+   * @param {*} position
+   */
+  removeAt(position = -1) {
+    if (position < 0 || position >= this.length) {
+      return false;
+    }
+
+    if (position === 0) {
+      let node = this.head;
+      let next = node.next;
+      this.head = next;
+      next.prev = null;
+      this.length--;
+      return node.value;
+    }
+
+    let index = 0;
+    let node = this.head;
+    while (node) {
+      if (position === index) {
+        let prev = node.prev;
+        let next = node.next;
+        prev.next = next;
+        if (position === this.length - 1) {
+          this.trail = prev;
+        } else {
+          next.prev = prev;
+        }
+
+        this.length--;
+        return node.value;
+      }
+      node = node.next;
+      index++;
+    }
+  }
+
+  /**
+   * 从链表中移除一个值
+   * @param {*} value
+   */
+  remove(value) {
+    let index = this.indexOf(value);
+    if (index < 0) {
+      return;
+    }
+    return this.removeAt(index);
+  }
+
+  /**
+   * 由值查找链表中的Node节点
+   * @param {*} value
+   */
+  findNode(value) {
+    let node = this.head;
+    while (node) {
+      if (node.value === value) {
+        return node;
+      }
+      node = node.next;
+    }
+  }
+
   /**
    * 遍历链表，以数组的形式输出
    */
