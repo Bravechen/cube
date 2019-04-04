@@ -23,7 +23,11 @@ class SList {
     this.length++;
     return node.value;
   }
-
+  /**
+   * 在位置插入值
+   * @param {*} position
+   * @param {*} value
+   */
   instertAt(position = -1, value) {
     if (position < 0 || position >= this.length) {
       return;
@@ -53,7 +57,10 @@ class SList {
       index++;
     }
   }
-
+  /**
+   * 在某个位置移除节点和值
+   * @param {*} position
+   */
   removeAt(position = -1) {
     if (position < 0 || position >= this.length || !this.head) {
       return;
@@ -85,30 +92,41 @@ class SList {
       index++;
     }
   }
-
+  /**
+   * 检测值是否在链表中
+   * @param {*} value
+   */
   indexOf(value) {
-    let index = -1;
+    let index = 0;
     let node = this.head;
     while (node) {
-      index++;
       if (node.value === value) {
         return index;
       }
       node = node.next;
+      index++;
     }
     return -1;
   }
-
+  /**
+   * 查找某个值，如果存在则返回节点
+   * 如果不存在则返回null
+   * @param {*} value
+   */
   findNode(value) {
     let node = this.head;
     while(node) {
       if (node.value === value) {
         return node;
       }
+      node = node.next;
     }
     return null;
   }
-
+  /**
+   * 移除一个值
+   * @param {*} value
+   */
   remove(value) {
     let index = this.indexOf(value);
     if (index < 0) {
@@ -116,7 +134,9 @@ class SList {
     }
     return this.removeAt(index);
   }
-
+  /**
+   * 遍历链表将值组合成数组输出
+   */
   traversal() {
     let ary = [];
     let node = this.head;
