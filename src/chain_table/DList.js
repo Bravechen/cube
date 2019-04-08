@@ -171,6 +171,12 @@ class DList {
     }
     return ary;
   }
+
+  destroy() {
+    this.head = null;
+    this.trail = null;
+    this.length = 0;
+  }
 }
 
 class Node {

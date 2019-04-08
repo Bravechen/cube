@@ -132,6 +132,7 @@ class SList {
     }
     return this.removeAt(index);
   }
+
   /**
    * 遍历链表将值组合成数组输出
    */
