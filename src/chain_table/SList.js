@@ -33,27 +33,24 @@ class SList {
       return;
     }
     let node = new Node(value);
-
     if (position === 0) {
       node.next = this.head;
-      this.head = node.next;
+      this.head = node;
       this.length++;
       return;
     }
     let prev = this.head;
+    let current = prev.next;
     let index = 1;
-    while (index < this.length) {
-      if (!prev) {
-        return;
-      }
+    while (current) {
       if (index === position) {
-        let next = prev.next;
         prev.next = node;
-        node.next = next;
+        node.next = current;
         this.length++;
         return;
       }
-      prev = prev.next;
+      prev = current;
+      current = prev.next;
       index++;
     }
   }
@@ -77,9 +74,9 @@ class SList {
     }
     let index = 1;
     let prev = this.head;
-    while (index >= 0) {
+    let node = prev.next;
+    while (node) {
       if (index === position) {
-        let node = prev.next;
         prev.next = node.next;
         if (node === this.trail) {
           this.trail = prev;
@@ -88,7 +85,8 @@ class SList {
         this.length--;
         return node.value;
       }
-      prev = prev.next;
+      prev = node;
+      node = prev.next;
       index++;
     }
   }
@@ -145,6 +143,12 @@ class SList {
       node = node.next;
     }
     return ary;
+  }
+
+  destroy() {
+    this.head = null;
+    this.trail = null;
+    this.length = 0;
   }
 }
 
