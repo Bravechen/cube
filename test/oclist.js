@@ -36,10 +36,32 @@ describe('One-way Circular Linked List', function() {
   });
 
   describe('#OCList.insertAt()', function() {
+
     it('after insert 12 at index 5, property length equal 11', function() {
       let oclist = createOCList();
       oclist.insertAt(5, 12);
       expect(oclist).have.lengthOf(11);
     });
+
+    it('after insert 12 at index 0, property head who has property value equal 12', function() {
+      let oclist = createOCList();
+      oclist.insertAt(0, 12);
+      expect(oclist.head)
+        .to.be.a('object')
+        .have.property('value')
+        .equal(12);
+    });
+
+    it('after insert 12 at index -1, nothing happend', function() {
+      let oclist = createOCList();
+      oclist.insertAt(-1, 12);
+      expect(oclist)
+        .have.property('length')
+        .equal(10);
+    });
+  });
+
+  describe('#OCList.removeAt()', function() {
+    it();
   });
 });
