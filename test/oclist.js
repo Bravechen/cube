@@ -62,6 +62,58 @@ describe('One-way Circular Linked List', function() {
   });
 
   describe('#OCList.removeAt()', function() {
-    it();
+    it('remove value at index -1, back undefined', function() {
+      let oclist = createOCList();
+      expect(oclist.removeAt(-1)).to.equal(void 0);
+    });
+
+    it('remove value at oclist.length, back undefined', function() {
+      let oclist = createOCList();
+      expect(oclist.removeAt(oclist.length)).to.equal(void 0);
+    });
+
+    describe('remove the value 1 at index 0', function() {
+      let oclist = createOCList();
+      oclist.removeAt(0);
+      it('property head who has property value equal 2', function() {
+        expect(oclist.head)
+          .have.property('value')
+          .equal(2);
+      });
+
+      it('oclist.trail.next reference equal oclist.head', function() {
+        expect(oclist.trail.next).to.equal(oclist.head);
+      });
+    });
+
+    describe('remove the value 6 at index 5', function() {
+      let oclist = createOCList();
+      let value = oclist.removeAt(5);
+      it('length equal 9', function() {
+        expect(oclist).lengthOf(9);
+      });
+
+      it('after removeAt(4) back 5', function() {
+        expect(value).to.equal(6);
+      });
+    });
+
+    describe('remove the value who at oclist.length - 1', function() {
+      let oclist = createOCList();
+      let value = oclist.removeAt(oclist.length-1);
+      it('lenth equal 9', function() {
+        expect(oclist).lengthOf(9);
+      });
+
+      it('after remove(oclist.length-1), back 10', function() {
+        expect(value).to.equal(10);
+      });
+
+      it('oclist.trail whose property value is equal 9', function() {
+        expect(oclist.trail)
+          .to.have.property('value')
+          .equal(9);
+      });
+    });
   });
 });
