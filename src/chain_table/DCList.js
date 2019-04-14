@@ -8,6 +8,22 @@ class DCList {
     this.trail = null;
     this.length = null;
   }
+
+  append(value) {}
+
+  indexOf(value) {}
+
+  lastIndexOf(value) {}
+
+  insertAt(position = -1, value) {}
+
+  removeAt(position = -1, value) {}
+
+  remove(value) {}
+
+  traversal() {}
+
+  destroy() {}
 }
 
 class Node {
@@ -17,3 +33,5 @@ class Node {
     this.trail = null;
   }
 }
+
+module.exports = DCList;

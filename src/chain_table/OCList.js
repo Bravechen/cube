@@ -8,7 +8,10 @@ class OCList {
     this.trail = null;
     this.length = 0;
   }
-
+  /**
+   * 在链表尾部添加数据
+   * @param {*} value 
+   */
   append(value) {
     let node = new Node(value);
     if (this.length === 0) {
@@ -20,7 +23,11 @@ class OCList {
     this.trail = node;
     this.length++;
   }
-
+  /**
+   * 在指定位置插入数据
+   * @param {*} position 
+   * @param {*} value 
+   */
   insertAt(position = -1, value) {
     if (position < 0 || position >= this.length) {
       return;
@@ -51,7 +58,10 @@ class OCList {
       index++;
     }
   }
-
+  /**
+   * 移除指定位置的数据
+   * @param {*} position 
+   */
   removeAt(position = -1) {
     if (position < 0 || position >= this.length) {
       return;
@@ -85,11 +95,42 @@ class OCList {
       index++;
     }
   }
+  /**
+   * 移除链表中的指定数据
+   * @param {*} value 
+   */
+  remove(value) {
+    let index = this.indexOf(value);
+    if (index < 0) {
+      return false;
+    }
 
-  remove(value) {}
-
-  indexOf(value) {}
-
+    this.removeAt(index);
+    return true;
+  }
+  /**
+   * 查找一个值在链表中的索引号，
+   * 没有返回-1，有则返回索引号
+   * @param {*} value 
+   */
+  indexOf(value) {
+    if (this.length <= 0) {
+      return -1;
+    }
+    let index = 0;
+    current = this.head;
+    while (index < this.length) {
+      if (current.value === value) {
+        return index;
+      }
+      current = current.next;
+      index++;
+    }
+    return -1;
+  }
+  /**
+   * 以数组的形式输出链表中的数值集合
+   */
   traversal() {
     let index = 0;
     let ary = [];
@@ -99,7 +140,9 @@ class OCList {
     }
     return ary;
   }
-
+  /**
+   * 销毁链表
+   */
   destroy() {
     this.head = null;
     this.trail = null;
