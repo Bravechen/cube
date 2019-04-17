@@ -33,26 +33,22 @@ class SList {
       return;
     }
     let node = new Node(value);
-    if (position === 0) {
-      node.next = this.head;
-      this.head = node;
-      this.length++;
-      return;
-    }
-    let prev = this.head;
-    let current = prev.next;
-    let index = 1;
-    while (current) {
-      if (index === position) {
-        prev.next = node;
-        node.next = current;
-        this.length++;
-        return;
-      }
+    let index = 0;
+    let current = this.head;
+    let prev;
+    while (index++ !== position) {
       prev = current;
-      current = prev.next;
-      index++;
+      current = current.next;
     }
+    if (position !== 0) {
+      prev.next = node;
+    } else {
+      this.head = node;
+    }
+
+    node.next = current;
+    this.length++;
+
   }
   /**
    * 在某个位置移除节点和值

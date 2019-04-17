@@ -105,6 +105,25 @@ describe('Singly Linked List', () => {
         expect(slist.indexOf(1)).to.equal(1);
       });
     });
+
+    describe('after inster a element 11 at slice.length - 1', function() {
+      let slist = createSList();
+      slist.instertAt(slist.length - 1, 11);
+      it('have property length equal 9', function() {
+        console.log('after insert', slist.traversal());
+        expect(slist)
+          .to.be.a('object')
+          .have.lengthOf(9);
+      });
+
+      it('after insert the element 11 at index 7 ', function() {
+        expect(slist.indexOf(11)).to.equal(7);
+      });
+
+      it('The old element 8 at index slist.length - 1 who still at index slist.length - 1', function() {
+        expect(slist.indexOf(slist.trail.value)).to.equal(slist.length-1);
+      });
+    });
   });
 
   describe('#SList.removeAt()', function() {
