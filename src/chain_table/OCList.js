@@ -10,11 +10,11 @@ class OCList {
   }
   /**
    * 在链表尾部添加数据
-   * @param {*} value 
+   * @param {*} value
    */
   append(value) {
     let node = new Node(value);
-    if (this.length === 0) {
+    if (!this.head) {
       this.head = node;
       this.trail = node;
     }
@@ -25,8 +25,8 @@ class OCList {
   }
   /**
    * 在指定位置插入数据
-   * @param {*} position 
-   * @param {*} value 
+   * @param {*} position
+   * @param {*} value
    */
   insertAt(position = -1, value) {
     if (position < 0 || position >= this.length) {
@@ -34,38 +34,30 @@ class OCList {
     }
 
     let node = new Node(value);
-    if (position === 0) {
-      node.next = this.head;
-      this.head = node;
-      this.trail = node;
-      this.length++;
-      return;
-    }
-
-    let index = 1;
-    let prev = this.head;
-    let current = prev.next;
-    while(current) {
-      if (index === position) {
-        prev.next = node;
-        node.next = current;
-        this.length++;
-        return;
-      }
-
+    let index = 0;
+    let current = this.head;
+    let prev;
+    while (index++ !== position) {
       prev = current;
       current = current.next;
-      index++;
     }
+
+    if (position === 0) {
+      prev = this.trail;
+      this.head = node;
+    }
+    prev.next = node;
+    node.next = current;
+    this.length++;
   }
   /**
    * 移除指定位置的数据
-   * @param {*} position 
+   * @param {*} position
    */
   removeAt(position = -1) {
     if (position < 0 || position >= this.length) {
       return;
-    } 
+    }
 
     if (position === 0) {
       let node = this.head;
@@ -97,7 +89,7 @@ class OCList {
   }
   /**
    * 移除链表中的指定数据
-   * @param {*} value 
+   * @param {*} value
    */
   remove(value) {
     let index = this.indexOf(value);
@@ -111,14 +103,14 @@ class OCList {
   /**
    * 查找一个值在链表中的索引号，
    * 没有返回-1，有则返回索引号
-   * @param {*} value 
+   * @param {*} value
    */
   indexOf(value) {
     if (this.length <= 0) {
       return -1;
     }
     let index = 0;
-    current = this.head;
+    let current = this.head;
     while (index < this.length) {
       if (current.value === value) {
         return index;

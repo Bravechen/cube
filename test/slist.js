@@ -128,17 +128,17 @@ describe('Singly Linked List', () => {
 
   describe('#SList.removeAt()', function() {
 
-    it(`Remove the element at index 5, property length equal 7`, function() {
+    describe('remove the element 5 at index 4', function() {
       let slist = createSList();
-      slist.removeAt(5);
-      expect(slist)
-        .have.lengthOf(7);
-    });
+      let value = slist.removeAt(4);
+      console.log('remove the element 5 at index 4', slist.traversal());
+      it('property length equal 7', function() {
+        expect(slist).have.lengthOf(7);
+      });
 
-    it(`after remove the element at index 5, back 6`, function() {
-      let slist = createSList();
-      console.log(slist.traversal());
-      expect(slist.removeAt(5)).to.equal(6);
+      it(`after remove the element at index 4, back 5`, function() {
+        expect(value).to.equal(5);
+      });
     });
 
     it('remove an element at index -1, back undefined.', function() {
@@ -146,14 +146,14 @@ describe('Singly Linked List', () => {
       expect(slist.removeAt(-1)).to.equal(void 0);
     });
 
-    describe('after remove an element at index 0', function() {
+    describe('remove the element at index 0', function() {
       let slist = createSList();
       let value = slist.removeAt(0);
-      it('should have property length equal 7', function() {
-        console.log(slist.traversal());
+      console.log('remove the element at index 0', slist.traversal());
+      it('property length should equal 7', function() {
         expect(slist).have.lengthOf(7);
       })
-      it('should have property head whose property value equal 2', function() {
+      it('property head whose property value should equal 2', function() {
         expect(slist.head)
           .to.be.a('object')
           .have.property('value')
@@ -161,19 +161,22 @@ describe('Singly Linked List', () => {
       });
     });
 
-  });
+    describe('remove the element at slist.length - 1', function() {
+      let slist = createSList();
+      let value = slist.removeAt(slist.length - 1);
+      console.log('remove the element at slist.length - 1', slist.traversal());
+      it('property length should equal 7', function() {
+        expect(slist).have.lengthOf(7);
+      });
 
-  describe('#SList.findNode()', function() {
-    let slist = createSList();
-    it('has a node whose property value equal 4', function() {
-      expect(slist.findNode(4)).to.be.a('object')
-        .have.property('value')
-        .to.equal(4);
+      it('property trail whose property value should equal 7', function() {
+        expect(slist.trail)
+          .to.be.a('object')
+          .have.property('value')
+            .equal(7);
+      });
     });
 
-    it('passing a wrong number 100 to findNode(), back null.', function() {
-      expect(slist.findNode(100)).to.be.equal(null);
-    });
   });
 
   describe('#SList.remove()', function() {

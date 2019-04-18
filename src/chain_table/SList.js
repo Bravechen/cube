@@ -6,7 +6,10 @@ class SList {
   constructor() {
     this.head = null;
     this.trail = null;
-    this.length = 0;
+    this._length = 0;
+  }
+  get length() {
+    return this._length;
   }
   /**
    * 在尾部添加
@@ -20,7 +23,7 @@ class SList {
     } else {
       this.trail = node;
     }
-    this.length++;
+    this._length++;
     return node.value;
   }
   /**
@@ -29,7 +32,7 @@ class SList {
    * @param {*} value
    */
   instertAt(position = -1, value) {
-    if (position < 0 || position >= this.length) {
+    if (position < 0 || position >= this._length) {
       return;
     }
     let node = new Node(value);
@@ -47,7 +50,7 @@ class SList {
     }
 
     node.next = current;
-    this.length++;
+    this._length++;
 
   }
   /**
@@ -55,36 +58,28 @@ class SList {
    * @param {*} position
    */
   removeAt(position = -1) {
-    if (position < 0 || position >= this.length || !this.head) {
+    if (position < 0 || position >= this._length) {
       return;
+    }
+
+    let index = 0;
+    let current = this.head;
+    let prev;
+    while (index++ !== position) {
+      prev = current;
+      current = prev.next;
     }
     if (position === 0) {
-      let next = this.head.next;
-      if (this.head === this.trail) {
-        this.trail = null;
-        this.length = 1;
-      }
-      this.head = next;
-      this.length--;
-      return;
+      this.head = current.next;
+    } else {
+      prev.next = current.next;
     }
-    let index = 1;
-    let prev = this.head;
-    let node = prev.next;
-    while (node) {
-      if (index === position) {
-        prev.next = node.next;
-        if (node === this.trail) {
-          this.trail = prev;
-        }
-        node.next = null;
-        this.length--;
-        return node.value;
-      }
-      prev = node;
-      node = prev.next;
-      index++;
+    current.next = null;
+    if (position === this._length - 1) {
+      this.trail = prev;
     }
+    this._length--;
+    return current.value;
   }
   /**
    * 检测值是否在链表中
@@ -101,21 +96,6 @@ class SList {
       index++;
     }
     return -1;
-  }
-  /**
-   * 查找某个值，如果存在则返回节点
-   * 如果不存在则返回null
-   * @param {*} value
-   */
-  findNode(value) {
-    let node = this.head;
-    while(node) {
-      if (node.value === value) {
-        return node;
-      }
-      node = node.next;
-    }
-    return null;
   }
   /**
    * 移除一个值
@@ -145,7 +125,7 @@ class SList {
   destroy() {
     this.head = null;
     this.trail = null;
-    this.length = 0;
+    this._length = 0;
   }
 }
 

@@ -59,6 +59,22 @@ describe('One-way Circular Linked List', function() {
         .have.property('length')
         .equal(10);
     });
+
+    describe('after insert 11 at index oclist.length - 1', function() {
+      let oclist = createOCList();
+      oclist.insertAt(oclist.length - 1, 11);
+      it('property length equal 11', function() {
+        expect(oclist).have.lengthOf(11);
+      });
+
+      it('oclist.trail who has property value still equal 10', function() {
+        expect(oclist.trail).have.property('value').equal(10);
+      });
+
+      it('the element 11 be found at index oclist.length - 2', function() {
+        expect(oclist.indexOf(11)).to.equal(oclist.length - 2);
+      });
+    });
   });
 
   describe('#OCList.removeAt()', function() {
