@@ -59,33 +59,27 @@ class OCList {
       return;
     }
 
-    if (position === 0) {
-      let node = this.head;
-      this.head = node.next;
-      this.trail.next = this.head;
-      this.head.prev = this.trail;
-      this.length--;
-      return node.value;
-    }
-
-    let index = 1;
-    let prev = this.head;
-    let current = prev.next;
-    while (index < this.length) {
-      if (index === position) {
-        let next = current.next;
-        if (current === this.trail) {
-          this.trail = prev;
-        }
-        prev.next = next;
-        next.prev = prev;
-        this.length--;
-        return current.value;
-      }
+    let index = 0;
+    let current = this.head;
+    let prev;
+    while (index++ !== position) {
       prev = current;
       current = current.next;
-      index++;
     }
+    if (position === 0) {
+      this.head = current.next;
+      this.trail.next = this.head;
+    } else {
+      prev.next = current.next;
+    }
+
+    if (position === this.length - 1) {
+      this.trail = prev;
+    }
+
+    current.next = null;
+    this.length--;
+    return current.value;
   }
   /**
    * 移除链表中的指定数据
@@ -118,6 +112,7 @@ class OCList {
       current = current.next;
       index++;
     }
+
     return -1;
   }
   /**

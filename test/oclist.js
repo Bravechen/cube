@@ -109,8 +109,12 @@ describe('One-way Circular Linked List', function() {
         expect(oclist).lengthOf(9);
       });
 
-      it('after removeAt(4) back 5', function() {
+      it('after removeAt(5) back 6', function() {
         expect(value).to.equal(6);
+      });
+
+      it('get element 7 where at index 5', function() {
+        expect(oclist.indexOf(7)).to.equal(5);
       });
     });
 
@@ -129,6 +133,13 @@ describe('One-way Circular Linked List', function() {
         expect(oclist.trail)
           .to.have.property('value')
           .equal(9);
+      });
+
+      it('oclist.trail.next whose property value is 1', function() {
+        expect(oclist.trail.next)
+          .to.be.a('object')
+          .have.property('value')
+            .to.equal(1);
       });
     });
   });

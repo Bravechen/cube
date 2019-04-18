@@ -17,12 +17,11 @@ class DList {
     if (this.length === 0) {
       this.head = node;
       this.trail = node;
-      this.length = 1;
-      return;
+    } else {
+      node.prev = this.trail;
+      this.trail.next = node;
+      this.trail = node;
     }
-    this.trail.next = node;
-    node.prev = this.trail;
-    this.trail = node;
     this.length++;
   }
   /**
@@ -32,12 +31,12 @@ class DList {
    */
   indexOf(value) {
     let index = 0;
-    let node = this.head;
-    while(node) {
-      if (node.value === value) {
+    let current = this.head;
+    while(current) {
+      if (current.value === value) {
         return index;
       }
-      node = node.next;
+      current = current.next;
       index++;
     }
     return -1;
@@ -50,12 +49,12 @@ class DList {
    */
   lastIndexOf(value) {
     let index = this.length - 1;
-    let node = this.trail;
-    while (node) {
-      if (node.value === value) {
+    let current = this.trail;
+    while (current) {
+      if (current.value === value) {
         return index;
       }
-      node = node.prev;
+      current = current.prev;
       index--;
     }
     return -1;
@@ -67,31 +66,26 @@ class DList {
    */
   insertAt(position = -1, value) {
     if (position < 0 || position >= this.length) {
-      return false;
+      return;
     }
-    let newOne = new Node(value);
-    if (position === 0) {
-      this.head.prev = newOne;
-      newOne.next = this.head;
-      this.head = newOne;
-      this.length++;
-      return true;
+    let node = new Node(value);
+    let mid = this.length >> 1;
+    let current = getLinkedNode(
+      position,
+      position > mid ? this.trail : this.head,
+      this.length,
+      position > mid ? -1 : 1
+    );
+    let prev = current.prev;
+    node.next = current;
+    current.prev = node;
+    node.prev = prev;
+    if (position !== 0) {
+      prev.next = node;
+    } else {
+      this.head = node;
     }
-    let index = 0;
-    let node = this.head;
-    while(node) {
-      if (position === index) {
-        node.prev.next = newOne;
-        newOne.prev = node.prev;
-        newOne.next = node;
-        node.prev = newOne;
-        this.length++;
-        return true;
-      }
-      node = node.next;
-      index++;
-    }
-    return false;
+    this.length++;
   }
 
   /**
@@ -103,34 +97,32 @@ class DList {
       return false;
     }
 
-    if (position === 0) {
-      let node = this.head;
-      let next = node.next;
+    let mid = this.length >> 1;
+    let current = getLinkedNode(
+      position,
+      position > mid ? this.trail : this.head,
+      this.length,
+      position > mid ? -1 : 1
+    );
+    let next = current.next;
+    let prev = current.prev;
+
+    if (position === this.length - 1) {
+      this.trail = prev;
+    } else {
+      next.prev = prev;
+    }
+
+    if (position !== 0) {
+      prev.next = next;
+    } else {
       this.head = next;
-      next.prev = null;
-      this.length--;
-      return node.value;
     }
 
-    let index = 0;
-    let node = this.head;
-    while (node) {
-      if (position === index) {
-        let prev = node.prev;
-        let next = node.next;
-        prev.next = next;
-        if (position === this.length - 1) {
-          this.trail = prev;
-        } else {
-          next.prev = prev;
-        }
-
-        this.length--;
-        return node.value;
-      }
-      node = node.next;
-      index++;
-    }
+    current.next = null;
+    current.prev = null;
+    this.length--;
+    return current.value;
   }
 
   /**
@@ -185,6 +177,18 @@ class Node {
     this.next = null;
     this.prev = null;
   }
+}
+
+function getLinkedNode(position, start, length, direct) {
+  let current = start;
+  let index = direct === -1 ? length - 1 : 0;
+  let key = direct === -1 ? 'prev' : 'next';
+  let step = direct === -1 ? -1 : 1;
+  while (index !== position) {
+    current = current[key];
+    index += step;
+  }
+  return current;
 }
 
 module.exports = DList;
